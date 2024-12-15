@@ -1,0 +1,29 @@
+{% extends "./navigation.html" %}
+
+{% block content %}
+
+<main>
+  <h1>Connexion</h1>
+      <div class="container">
+        <form method="post" class="connexion-form">
+          {% csrf_token %}
+          {% for field in form %}
+            <div>
+              {{ field.errors }}
+              {{ field.label_tag }}
+              {{ field }}
+            </div>
+          {% endfor %}
+          <button type="submit">Connexion</button>
+        </form>
+      </div>
+  
+    {% if messages %}
+      {% for message in messages %}
+        <div role="alert">
+          {{ message }}
+        </div>
+      {% endfor %}
+    {% endif %}
+</main>
+{% endblock %}

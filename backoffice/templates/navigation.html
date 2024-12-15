@@ -1,0 +1,39 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang='fr'>
+<head>
+<meta charset='UTF-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0'>
+<link href={% static "css/style.css" %} rel="stylesheet" />
+<title>BiblioDrive</title>
+</head>
+<body>
+  <nav>
+    <div>
+      <a href='/' class="navitem">Accueil</a>
+      <a href='/auteurs' class="navitem">Les auteurs</a>
+      <a href='/editeurs' class="navitem">Les éditeurs</a>
+      <a href='/livres' class="navitem">Les livres</a>
+      {%if user.is_authenticated and user.is_staff %}
+        <a href='/admin' class="navitem">Page administrateur</a>
+      {% endif %}
+    </div>
+    {% if user.is_authenticated %}
+        <div>
+          <img src='/images/user-solid.svg' class="icon"/>
+          <span class="username">{{user.username}}</span>
+          <a href='/deconnexion' class="navitem">Déconnexion</a>
+        </div>
+    {% else %}
+      <div>
+        <a href="/connexion" class="navitem">Connexion</a>
+        <a href="/inscription" class="navitem">Inscription</a>
+      </div>
+    {% endif %}
+  </nav>
+
+  {% block content %}{% endblock %}
+
+</body>
+</html>

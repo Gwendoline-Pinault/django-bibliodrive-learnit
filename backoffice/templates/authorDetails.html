@@ -1,0 +1,33 @@
+{% extends "./navigation.html" %}
+{% block content %}
+
+<main>
+  <h1>{{author.author}}</h1>
+  
+  <p>Année de naissance : {{author.year_born}}</p>
+  
+  <h3>De cet auteur :</h3>
+  
+  <ul class="list">
+    {% for book in books.all %}
+      {% if book.image == "" %}
+          <a href="/books/{{book.title_id}}" class="book-item">
+            <h5>{{ book.title }}</h5>
+            <p style="font-style: italic">Aucune image</p>
+          </a>
+        {% else %}
+          <a href="/books/{{book.title_id}}" class="book-item">
+            <img class="image" src="/{{book.image}}"/>
+            <h5>{{ book.title }}</h5>
+          </a>
+        {% endif %}
+    {% endfor %}
+  
+    {% if books.all|length == 0 %}
+      Aucun livre dans la base
+    {% endif %}
+  </ul>
+</main>
+
+
+{% endblock %}

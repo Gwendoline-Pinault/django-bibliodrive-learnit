@@ -1,0 +1,37 @@
+{% extends "./navigation.html" %}
+
+{% block content %}
+<main>
+  <h1>Les livres</h1>
+  
+    <ul class="list">
+      {% for book in page_object %}
+        {% if book.image == "" %}
+          <a href="/livres/{{book.title_id}}" class="book-item">
+            <p style="font-style: italic">Aucune image</p>
+            <h5>{{ book.title }}</h5>
+          </a>
+        {% else %}
+          <a href="/livres/{{book.title_id}}" class="book-item">
+            <img class="image" src="/{{book.image}}"/>
+            <h5>{{ book.title }}</h5>
+          </a>
+        {% endif %}
+      {% endfor %}
+    </ul>
+
+    <section class="pagination">
+      {% if page_object.has_previous %}
+      <a href="?page={{ page_object.previous_page_number }}"><div class="page-item">Précédent</div></a>
+      {% endif %}
+        <a href='?page=1'><div class="page">{{page_object.number}}</div></a>
+        <span>/ {{page_object.paginator.num_pages}}</span>
+      {% if page_object.has_next %}
+        <a href='?page={{page_object.next_page_number}}'><div class="page-item">Suivant</div></a>
+      {% endif %}
+    </section>
+</main>
+
+
+{% endblock %}
+

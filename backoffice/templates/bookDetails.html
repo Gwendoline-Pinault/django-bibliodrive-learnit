@@ -1,0 +1,28 @@
+{% extends "./navigation.html" %}
+
+{% block content %}
+<main>
+  <h1>Détail du livre</h1>
+  
+    <h2>{{ book.title }}</h2>
+    
+    <section class="book-detail-section">
+      <div class="image-detail">
+          <img src="/{{book.image}}" />
+      </div>
+      <ul class="book-detail">
+        <li><h4>ISBN: </h4> {{book.isbn}}</li>
+        <li><h4>Année de publication: </h4> {{ book.year_published }}</li>
+        <li><h4>Editeur : </h4> {{publisher.name}}</li>
+        <li><h4>Description : </h4> {{book.description}}</li>
+        <li>
+          <h4>Auteur(s) : </h4>
+          {% for author in book.authors.all %}
+            <a href="/authors/{{author.au_id}}" class="tag">{{author.author}}</a>
+          {% endfor %}
+        </li>
+      </ul>
+    </section>
+</main>
+  
+{% endblock %}

@@ -1,0 +1,14 @@
+{% extends "./navigation.html" %}
+
+{% block content %}
+<main>
+  <h1>Créer un compte</h1>
+      <div class="container">
+        <form method="post" class="registration-form">
+          {% csrf_token %}
+          {{ form.as_p }} 
+          <button type="submit">S'inscrire</button>
+        </form>
+      </div>
+</main>
+{% endblock %}
