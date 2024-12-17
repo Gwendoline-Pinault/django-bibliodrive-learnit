@@ -1,4 +1,5 @@
 from django.db import models
+from django.conf import settings
 
 
 class Author(models.Model):
@@ -45,7 +46,12 @@ class Title(models.Model):
 
 
 class Reservation(models.Model):
-    reservation_id = models.AutoField(primary_key=True, null=False)
-    reservation_date = models.DateField()
-    return_date = models.DateField()
-    # book_id = models.ForeignKey(Title, on_delete=models.CASCADE)
+   reservation_id = models.AutoField(primary_key=True, null=False)
+   start_date = models.DateField()
+   return_date = models.DateField(null=True, blank=True)
+   title = models.ForeignKey(Title, on_delete=models.CASCADE, null=True)
+   user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True)
+   
+   def __str__(self):
+    return self.title.title
+

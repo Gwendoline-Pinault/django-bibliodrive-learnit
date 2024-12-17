@@ -6,7 +6,7 @@
   
     <ul class="list">
       {% for publisher in page_object %}
-        <a class="tag">{{publisher.name}}</a>
+        <a class="tag" href="/editeurs/{{publisher.pubid}}">{{publisher.name}}</a>
       {% endfor %}
     </ul>
 

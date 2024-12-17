@@ -13,7 +13,7 @@
     <div>
       <a href='/' class="navitem">Accueil</a>
       <a href='/auteurs' class="navitem">Les auteurs</a>
-      <a href='/editeurs' class="navitem">Les éditeurs</a>
+      {% comment %} <a href='/editeurs' class="navitem">Les éditeurs</a> {% endcomment %}
       <a href='/livres' class="navitem">Les livres</a>
       {%if user.is_authenticated and user.is_staff %}
         <a href='/admin' class="navitem">Page administrateur</a>

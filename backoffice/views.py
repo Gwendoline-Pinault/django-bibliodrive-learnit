@@ -2,14 +2,13 @@ from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
-from backoffice.models import Author, Publisher, Title
-from backoffice.forms import LoginForm, SignUpForm
+from backoffice.models import Author, Publisher, Title, Reservation
+from backoffice.forms import LoginForm, SignUpForm, ReservationForm
 from django.core.paginator import Paginator
 
 
 def home(request):
-    publishers = Publisher.objects.all()
-    return render(request, 'home.html', {'publishers': publishers, })
+    return render(request, 'home.html')
 
 
 def books(request):
@@ -24,7 +23,7 @@ def bookDetails(request, title_id):
     book = Title.objects.get(title_id=title_id)
     publisher = Publisher.objects.get(pubid=book.pubid.pubid)
 
-    return render(request, 'bookDetails.html', {'book': book, 'publisher': publisher})
+    return render(request, 'bookDetails.html', {'book': book, 'publisher': publisher })
 
 
 def authors(request):
@@ -54,6 +53,12 @@ def publishers(request):
     return render(request, 'publishers.html', {'page_object': page_object})
 
 
+def publisherDetails(request, pubid):
+    publisher = get_object_or_404(Publisher, pubid=pubid)
+
+    return render(request, 'publisherDetails.html', {'publisher': publisher})
+
+
 def registration(request):
     if request.method == 'POST':
         form = SignUpForm(request.POST)
@@ -64,6 +69,7 @@ def registration(request):
     else:
         form = SignUpForm()
     return render(request, 'registration.html', {'form': form})
+
 
 def connexion(request):
     form = LoginForm()
@@ -84,9 +90,49 @@ def connexion(request):
 
 
 def deconnexion(request):
+    messages = None
     user = logout(request)
     return redirect('home')
 
 
+def reservation(request, title_id):
+    book = Title.objects.get(title_id=title_id)
+    error = None
+    success = None
+    user = request.user
+    info = None
+
+    # Get user reservation to limit to 3
+    reservations = Reservation.objects.filter(user=user)
+
+    print(reservations)
+
+    if len(reservations) > 2:
+        info = "Vous ne pouvez pas réserver plus de 3 livres en même temps."
+
+    if request.method == 'POST':
+        form = ReservationForm(request.POST)
+
+        if form.is_valid():
+            start_date = request.POST['start_date']
+            title = Title.objects.get(title_id=title_id)
+            status = True
+
+            reservation = Reservation(start_date=start_date, title=title, user=user)
+            reservation.save()
+
+            Title.objects.filter(title_id=title_id).update(status=status)
+            success = "Votre réservation a bien été ajoutée !"
+            
+        else :
+            error = "Une erreur est survenue, veuillez réessayer ou vérifier les informations."
+
+    else:
+        form = ReservationForm() 
+
+    return render(request, 'reservation.html', {'form': form, 'book': book, 'error': error, 'success': success, 'info': info})
+
+
 def profile(request):
     return render(request, 'profile.html')
+

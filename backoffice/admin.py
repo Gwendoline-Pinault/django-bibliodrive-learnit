@@ -1,5 +1,5 @@
 from django.contrib import admin
-from backoffice.models import Author, Publisher, Title
+from backoffice.models import Author, Publisher, Title, Reservation
 from django.utils.html import format_html
 
 admin.site.register(Author)
@@ -18,3 +18,9 @@ class TitleAdmin(admin.ModelAdmin):
 
 admin.site.register(Title, TitleAdmin)
 
+class ReservationAdmin(admin.ModelAdmin):
+    list_display = ('title', 'start_date', 'return_date')
+
+    search_fields = ['return_date']
+
+admin.site.register(Reservation, ReservationAdmin)

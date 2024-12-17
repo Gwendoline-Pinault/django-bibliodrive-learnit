@@ -1,0 +1,36 @@
+{% extends "./navigation.html" %}
+
+{% block content %}
+<main>
+  <h1>Réservation</h1>
+
+  <p>Vous réservez ce livre suivant : <span class="italic">{{book.title}}</span> de 
+    {% for author in book.authors.all%}
+      {{author.author}}
+    {% endfor %}
+  </p>
+
+  {% if info %}
+    <p class="info"> {{info}}</p>
+
+    <a href="/livres/{{book.title_id}}" class='button'>Retour</a>
+
+  {% else %}
+    <form method="post" class="form">
+      {% csrf_token %}
+      {{ form.as_p }} 
+      <span class="helptext">Date au format AAAA-MM-JJ</span>
+      <button type="submit" class="button">Valider</button>
+    </form>
+
+    {% if error %}
+      <p class="error-message">{{error}}</p>
+    {% endif %}
+
+    {% if success %}
+      <p class="success-message">{{success}}</p>
+    {% endif %}
+  {% endif %}
+
+</main>
+{% endblock %}

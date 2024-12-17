@@ -18,11 +18,17 @@
         <li>
           <h4>Auteur(s) : </h4>
           {% for author in book.authors.all %}
-            <a href="/authors/{{author.au_id}}" class="tag">{{author.author}}</a>
+            <a href="/auteurs/{{author.au_id}}" class="tag">{{author.author}}</a>
           {% endfor %}
         </li>
       </ul>
     </section>
+
+    {% if book.status == False %}
+      <a class="button" href="/livres/{{book.title_id}}/reservation">Réserver ce livre</a>
+    {% else %}
+      <p>Ce livre est actuellement réservé.</p>
+    {% endif %}
 </main>
   
 {% endblock %}
