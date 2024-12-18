@@ -33,5 +33,5 @@ urlpatterns = [
     path('inscription/', views.registration, name='registration'),
     path('connexion/', views.connexion, name='connexion'),
     path('deconnexion/', views.deconnexion, name='deconnexion'),
-    path('profil/', views.profile, name='profile')
+    # path('profil/', views.profile, name='profile')
 ] + static(settings.IMAGES_URL, document_root=settings.IMAGES_ROOT)

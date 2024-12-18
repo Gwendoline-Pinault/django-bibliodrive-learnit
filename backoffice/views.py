@@ -104,6 +104,7 @@ def reservation(request, title_id):
     # verify if user is connected to render the form only if true
     if request.user.is_authenticated :
         user = request.user
+        form = ReservationForm()
 
         # Get user reservation to limit to 3 books at the same time
         reservations = Reservation.objects.filter(user=user)

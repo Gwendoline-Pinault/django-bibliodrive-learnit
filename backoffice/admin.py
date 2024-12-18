@@ -5,6 +5,7 @@ from django.utils.html import format_html
 admin.site.register(Author)
 admin.site.register(Publisher)
 
+
 class TitleAdmin(admin.ModelAdmin):
     list_display = ('title', 'image_preview')
 
