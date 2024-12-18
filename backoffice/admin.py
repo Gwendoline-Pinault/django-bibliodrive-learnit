@@ -18,9 +18,10 @@ class TitleAdmin(admin.ModelAdmin):
 
 admin.site.register(Title, TitleAdmin)
 
-class ReservationAdmin(admin.ModelAdmin):
-    list_display = ('title', 'start_date', 'return_date')
 
-    search_fields = ['return_date']
+class ReservationAdmin(admin.ModelAdmin):
+    list_display = ('title', 'start_date', 'return_date', 'user')
+
+    search_fields = ['return_date', 'user__username']
 
 admin.site.register(Reservation, ReservationAdmin)
