@@ -107,7 +107,7 @@ def reservation(request, title_id):
         form = ReservationForm()
 
         # Get user reservation to limit to 3 books at the same time
-        reservations = Reservation.objects.filter(user=user)
+        reservations = Reservation.objects.filter(user=user, return_date=None)
 
         if len(reservations) > 2:
             info = "Vous ne pouvez pas réserver plus de 3 livres en même temps."
